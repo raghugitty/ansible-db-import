@@ -1,0 +1,24 @@
+- name : Playbook to import files from artifactory
+  hosts: localhost
+  tasks:
+   - name: Create a directory
+     file:
+       path: /var/lib/jenkins/workspace/ansible-postgres-db/dbscripts
+       state: directory
+       owner: jenkins
+       group: jenkins
+       mode: '0775'
+   - debug: msg="Directory created"
+
+   - name: get the req files
+     get_url:
+        url: 
+        url_password:
+        url_username: 
+        dest: /var/lib/jenkins/workspace/ansible-postgres-db/dbscripts
+
+   - name: unzip&Copy the required files to execute
+     unarchive:
+       src: /var/lib/jenkins/workspace/ansible-postgres-db/dbscripts/zipfilename
+       dest: /var/lib/jenkins/workspace/ansible-postgres-db/dbscripts
+       mode: 0755
